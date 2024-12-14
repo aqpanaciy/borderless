@@ -151,6 +151,7 @@ static inline void get_desktop_size (int* const w, int* const h)
   h[0] = r.bottom - r.top;
 }
 
+#pragma warning(disable : 4996)
 static bool is_windows81_plus (void)
 {
   OSVERSIONINFOW info = {.dwOSVersionInfoSize = sizeof(info)};
@@ -187,7 +188,7 @@ static bool get_config_path (void)
     return false;
   }
   _snwprintf (buf, MAX_PATH, L"%s\\" APP_TITLE, buf_appdata);
-  if (_wmkdir (buf) == -1) {
+  if (_wmkdir (buf) == -1 && errno != EEXIST) {
     return false;
   }
   _snwprintf (buf, MAX_PATH, L"%s\\" APP_TITLE L"\\config", buf_appdata);
@@ -394,12 +395,12 @@ struct hotkey {
 };
 
 struct hotkey hkey_border;
-struct hotkey hkey_border_def = (struct hotkey){
+struct hotkey hkey_border_def = {
   .ctrl = false, .alt = true, .shift = false, .win = false,
   .code = 'B', .id = 1
 };
 struct hotkey hkey_menu;
-struct hotkey hkey_menu_def = (struct hotkey){
+struct hotkey hkey_menu_def = {
   .ctrl = false, .alt = true, .shift = false, .win = false,
   .code = 'M', .id = 2
 };

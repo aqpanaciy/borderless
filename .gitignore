@@ -4,3 +4,10 @@ workspace.code-workspace
 *.res
 *.o
 config
+
+.easyTdd/**
+
+**/.vs/**
+
+**/Debug/**
+**/Release/**
